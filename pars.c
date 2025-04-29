@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:28:31 by aradwan           #+#    #+#             */
-/*   Updated: 2025/04/29 09:33:15 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/04/29 09:42:16 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int check(t_philo *s, char **av, int ac)
     int j;
     int i;
     
-    i = 0;
     j = 1;
     s->array = av;
     while(ac > j)
     {
+        i = 0;
         while(s->array[j][i])
         {
             if(!ft_isdigit(s->array[j][i]))
