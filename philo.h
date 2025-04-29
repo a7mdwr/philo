@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/04/29 09:07:55 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/04/29 09:30:19 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ typedef struct s_philo
 # include <unistd.h>
 # include <stdio.h>
 # include <time.h>
-
-int	ft_atoi(const char *str);
-int	ft_isdigit(int c);
-int check(t_philo *s);
+# include <string.h>
+int 	ft_atoi(const char *str);
+int 	ft_isdigit(int c);
+int check(t_philo *s, char **av, int ac);
+void	ft_bzero(void *s, size_t n);
 
 #endif
