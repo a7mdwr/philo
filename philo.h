@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/04/29 09:30:19 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/04/29 09:47:52 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 typedef struct s_philo
 {
     char **array;
+    int philos;
 } t_philo;
 
 # define TAB '\t'

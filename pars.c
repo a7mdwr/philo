@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:28:31 by aradwan           #+#    #+#             */
-/*   Updated: 2025/04/29 09:42:16 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/04/29 10:00:37 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int check(t_philo *s, char **av, int ac)
 {
     int j;
     int i;
-    
+    int first;
+
+    first = 1;
     j = 1;
     s->array = av;
     while(ac > j)
@@ -29,8 +31,11 @@ int check(t_philo *s, char **av, int ac)
                 return (perror("Error : there is char in args"), 0);
             i++;
         }
-        ft_atoi(s->array[j]);
+        if (first)
+            s->philos = ft_atoi(s->array[j]);
         j++;
+        ft_atoi(s->array[j]);
+        first  = 0;
     }
     return (1);
 }
