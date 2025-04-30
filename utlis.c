@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/04/30 11:37:08 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/04/30 12:24:00 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ void	ft_bzero(void *s, size_t n)
 int	ft_atoi(const char *str)
 {
 	size_t	i;
-	int		result;
+	long	result;
 	int		sign;
 
 	sign = 1;
 	result = 0;
 	i = 0;
-	while (((str[i] >= TAB && str[i] <= CARRIAGE) || (str[i] == SPACE)))
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
 		i++;
-	if ((str[i] == '-' || str[i] == '+'))
+	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
 			sign = -1;
@@ -37,10 +37,16 @@ int	ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result = result * 10 + (str[i] - '0');
+		if (sign == 1 && result > INT_MAX)
+		{
+			perror("Error: Values must be < 2147483647");
+			return (exit(1), 0);
+		}
 		i++;
 	}
-	return (result * sign);
+	return ((int)(result * sign));
 }
+
 
 int	ft_isdigit(int c)
 {

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/04/30 11:37:49 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/04/30 12:01:04 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@
 # include <stdio.h>
 # include <time.h>
 # include <string.h>
+# include <limits.h>
+# include <stdlib.h> 
 
 typedef struct s_philo
 {
     char **array;
     int philos;
-    int time_to_die;
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
