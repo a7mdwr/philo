@@ -3,6 +3,16 @@
 #include <stdio.h>
 #include "philo.h"
 
+// void    init_threads(t_philo *s)
+// {
+//     s->philos = ft_atoi(s->array[1]);
+//     s->time_to_die = ft_atoi(s->array[2]);
+//     s->time_to_eat = ft_atoi(s->array[3]);
+//     s->time_to_sleep = ft_atoi(s->array[4]);
+
+// }
+
+
 int main(int ac, char **av)
 {
     t_philo s;

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/04/30 09:23:25 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/04/30 11:20:05 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ typedef struct s_philo
 {
     char **array;
     int philos;
-    int id;
-    int meals_eaten;
-    long last_meal;
-    pthread_t thread;
+    // int time_to_die;
+    // int time_to_die;
+    // int time_to_eat;
+    // int time_to_sleep;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
 } t_philo;
@@ -39,7 +39,7 @@ typedef struct s_philo
 
 int 	ft_atoi(const char *str);
 int 	ft_isdigit(int c);
-int check(t_philo *s, char **av, int ac);
+int     check(t_philo *s, char **av, int ac);
 void	ft_bzero(void *s, size_t n);
 
 #endif
