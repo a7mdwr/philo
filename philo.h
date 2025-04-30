@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/04/30 11:20:05 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/04/30 11:37:49 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ typedef struct s_philo
 {
     char **array;
     int philos;
-    // int time_to_die;
-    // int time_to_die;
-    // int time_to_eat;
-    // int time_to_sleep;
+    int time_to_die;
+    int time_to_die;
+    int time_to_eat;
+    int time_to_sleep;
+    int must_eat;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
 } t_philo;

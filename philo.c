@@ -3,14 +3,24 @@
 #include <stdio.h>
 #include "philo.h"
 
-// void    init_threads(t_philo *s)
-// {
-//     s->philos = ft_atoi(s->array[1]);
-//     s->time_to_die = ft_atoi(s->array[2]);
-//     s->time_to_eat = ft_atoi(s->array[3]);
-//     s->time_to_sleep = ft_atoi(s->array[4]);
-
-// }
+void    init_threads(t_philo *s)
+{
+    s->philos = ft_atoi(s->array[1]);
+    s->time_to_die = ft_atoi(s->array[2]);
+    s->time_to_eat = ft_atoi(s->array[3]);
+    s->time_to_sleep = ft_atoi(s->array[4]);
+    if (s->philos <= 0 || s->time_to_die <= 0 || s->time_to_eat <= 0 || s->time_to_sleep <= 0)
+        return (perror("Error: Values must be > 0"), 0);
+    if (s->array[5])
+    {
+        s->must_eat = ft_atoi(s->array[5]);
+        if (s->must_eat <= 0)
+            return (perror("Error: must_eat must be > 0"), 0);
+    }
+    else
+        s->must_eat = -1;
+    return (1);
+}
 
 
 int main(int ac, char **av)
