@@ -9,7 +9,6 @@ int    init_threads(t_philo *s)
     s->time_to_die = ft_atoi(s->array[2]);
     s->time_to_eat = ft_atoi(s->array[3]);
     s->time_to_sleep = ft_atoi(s->array[4]);
-    printf("%d\n", s->time_to_sleep);
     if (!s->philos || !s->time_to_die || !s->time_to_eat || !s->time_to_sleep)
         return (perror("Error: Values must be > 0"), 0);
     if (s->array[5])
