@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/04/30 12:01:04 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/06 20:09:42 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,30 @@
 # include <string.h>
 # include <limits.h>
 # include <stdlib.h> 
+#include <stdbool.h>
 
-typedef struct s_philo
+typedef pthread_mutex_t t_mtx;
+
+typedef struct s_share
 {
-    char **array;
+    t_mtx *left_fork;
+    t_mtx *right_fork;
+    t_mtx *forks;
     int philos;
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
     int must_eat;
-    pthread_mutex_t *left_fork;
-    pthread_mutex_t *right_fork;
+    int simulation;
+}t_share;
+
+// ./philo 5 800 200 200
+
+typedef struct s_philo
+{
+    int id;
+    int died;
+    t_share *shared;
 } t_philo;
 
 
@@ -43,5 +56,8 @@ int 	ft_atoi(const char *str);
 int 	ft_isdigit(int c);
 int     check(t_philo *s, char **av, int ac);
 void	ft_bzero(void *s, size_t n);
+void    *routine(void *arg);
+void	*ft_malloc(size_t size);
+void    error_exit(char *error);
 
 #endif

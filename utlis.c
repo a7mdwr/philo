@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/04/30 12:24:00 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/06 20:05:48 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_atoi(const char *str)
 		result = result * 10 + (str[i] - '0');
 		if (sign == 1 && result > INT_MAX)
 		{
-			perror("Error: Values must be < 2147483647");
+			error_exit("Error: Values must be < 2147483647");
 			return (exit(1), 0);
 		}
 		i++;
@@ -54,4 +54,23 @@ int	ft_isdigit(int c)
 		return (1);
 	else
 		return (0);
+}
+
+void	*ft_malloc(size_t size)
+{
+	void	*a;
+
+	a = malloc(size);
+	if (a == NULL)
+	{
+		error_exit("Error: malloc failed\n");
+		exit(1);
+	}
+	return (a);
+}
+
+void error_exit(char *error)
+{
+	printf("%s\n, error");
+	exit(1);
 }
