@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/06 20:05:48 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/06 20:48:17 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,19 @@ void error_exit(char *error)
 {
 	printf("%s\n, error");
 	exit(1);
+}
+
+void	safe_mutux(t_mtx *mutex, t_mutex opcode)
+{
+	if (opcode == LOCK)
+		pthread_mutex_lock(mutex);
+	else if (opcode == UNLOCK)
+		pthread_mutex_unlock(mutex);
+	else if (opcode == INIT)
+		pthread_mutex_init(mutex, NULL);
+	else if (opcode == DESTOY)
+		pthread_mutex_destroy(mutex);
+	else
+		error_exit("Wrong opcode for mutex handle");
+		
 }

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/06 20:09:42 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/06 20:42:36 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@
 #include <stdbool.h>
 
 typedef pthread_mutex_t t_mtx;
+
+typedef enum e_mutexx
+{
+    LOCK,
+    UNLOCK,
+    INIT,
+    DESTOY,
+    CREAT,
+    JOIN,
+    DETACH,
+}   t_mutex;
 
 typedef struct s_share
 {
