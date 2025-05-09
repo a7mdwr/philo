@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/06 20:48:17 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/09 11:09:15 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,38 +54,4 @@ int	ft_isdigit(int c)
 		return (1);
 	else
 		return (0);
-}
-
-void	*ft_malloc(size_t size)
-{
-	void	*a;
-
-	a = malloc(size);
-	if (a == NULL)
-	{
-		error_exit("Error: malloc failed\n");
-		exit(1);
-	}
-	return (a);
-}
-
-void error_exit(char *error)
-{
-	printf("%s\n, error");
-	exit(1);
-}
-
-void	safe_mutux(t_mtx *mutex, t_mutex opcode)
-{
-	if (opcode == LOCK)
-		pthread_mutex_lock(mutex);
-	else if (opcode == UNLOCK)
-		pthread_mutex_unlock(mutex);
-	else if (opcode == INIT)
-		pthread_mutex_init(mutex, NULL);
-	else if (opcode == DESTOY)
-		pthread_mutex_destroy(mutex);
-	else
-		error_exit("Wrong opcode for mutex handle");
-		
 }
