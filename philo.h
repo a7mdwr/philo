@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/12 14:13:33 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/12 15:35:34 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,20 @@ typedef struct s_share
     int time_to_eat;
     int time_to_sleep;
     int must_eat;
-    int simulation;
-    bool    end_simulation;
-    bool all_philos_ready;
-    t_philo *philo;
-    bool c;
-    t_fork  *forks;
+    t_mtx *forks;
 }t_share;
-
-typedef struct s_fork
-{
-    t_mtx fork;
-    int   fork_id;
-}   t_fork;
 
 typedef struct s_philo
 {
     int id;
     int meals_count;
     bool full;
-    t_fork *left_fork;
-    t_fork *right_fork;
+    int left_fork;
+    int right_fork;
     pthread_t thread_id;
     t_share *share;
 } t_philo;
+
 
 
 int 	ft_atoi(const char *str);
@@ -81,8 +71,9 @@ void	ft_bzero(void *s, size_t n);
 void    *routine(void *arg);
 void	*ft_malloc(size_t size);
 void    error_exit(char *error);
-int     parsing(t_share *s, char **av);
+void start_simulation(t_philo *p);
+int    parsing(t_philo *p, char **av);
 // void	safe_mutex(t_mtx *mutex, t_mutex opcode);
 // void handle_mutex_error(int status, t_mutex opcode);
-void    data_init(t_share *s);
+void    data_init(t_philo *p);
 #endif

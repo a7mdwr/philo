@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:28:31 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/12 11:48:21 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/12 15:47:59 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,18 @@ int check(char **av, int ac)
     return (1);
 }
 
-int    parsing(t_share *s, char **av)
+int    parsing(t_philo *p, char **av)
 {
-    s->philos = ft_atoi(av[1]) * 1000;
-    s->time_to_die = ft_atoi(av[2]) * 1000;
-    s->time_to_eat = ft_atoi(av[3]) * 1000;
-    s->time_to_sleep = ft_atoi(av[4]) * 1000;
-    if (!s->philos || !s->time_to_die || !s->time_to_eat|| !s->time_to_sleep)
+    (void)p;
+    if (!p->share->philos || !p->share->time_to_die || !p->share->time_to_eat|| !p->share->time_to_sleep)
         return (error_exit("Error: Values must be > 0"), 0);
     if (av[5])
     {
-        s->must_eat = ft_atoi(av[5]) * 1000;
-        if (s->must_eat <= 0)
+        p->share->must_eat = ft_atoi(av[5]) * 1000;
+        if (p->share->must_eat <= 0)
             return (error_exit("Error: (must_eat) must be > 0"), 0);
     }
     else
-        s->must_eat = -1;
-    data_init(&s);
+        p->share->must_eat = -1;
     return (1);
 }

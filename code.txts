@@ -1,0 +1,91 @@
+==> handle_errors.c <==
+		return(0);
+	}
+	return (a);
+}
+
+void error_exit(char *error)
+{
+	printf("%s\n", error);
+	return ;
+}
+
+==> init.c <==
+    printf("%d\n\n", p->share->philos);
+    p->share->forks = ft_malloc(sizeof(pthread_mutex_t) * p->share->philos);
+    while (i < p->share->philos)
+    {
+        pthread_mutex_init(&p->share->forks[i], NULL);
+        p[i].left_fork = i;
+		p[i].right_fork = (i + 1) % p->share->philos;
+        i++;
+    }
+}
+==> pars.c <==
+    if (av[5])
+    {
+        p->share->must_eat = ft_atoi(av[5]) * 1000;
+        if (p->share->must_eat <= 0)
+            return (error_exit("Error: (must_eat) must be > 0"), 0);
+    }
+    else
+        p->share->must_eat = -1;
+    return (1);
+}
+
+==> philo.c <==
+    i = 0;
+    p = NULL;
+    // ft_bzero(p, sizeof(t_philo));
+    p = philo(p, av);
+    if(!check(av, ac) || !parsing(p, av))
+        return(0);
+    data_init(p);
+    start_simulation(p);
+    
+}
+==> routine.c <==
+        printf("philo number %d is eating\n", s->id);
+        usleep(s->share->time_to_eat);
+        // pthread_mutex_unlock(&s->share->forks[s->left_fork]);
+        // pthread_mutex_unlock(&s->share->forks[s->right_fork]);
+        printf("philo number %d is sleeping\n", s->id);
+        usleep(s->share->time_to_sleep);
+        
+    }
+    return NULL;
+}
+==> simulation.c <==
+    else
+    {
+        while (p->share->philos > i)
+        {
+            pthread_create(&p[i].thread_id, NULL, &routine, &p[i]);
+            p[i].id = i;
+            i++;
+        }
+    }
+}
+==> utlis.c <==
+}
+
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+
+==> philo.h <==
+void	ft_bzero(void *s, size_t n);
+void    *routine(void *arg);
+void	*ft_malloc(size_t size);
+void    error_exit(char *error);
+void start_simulation(t_philo *p);
+int    parsing(t_philo *p, char **av);
+// void	safe_mutex(t_mtx *mutex, t_mutex opcode);
+// void handle_mutex_error(int status, t_mutex opcode);
+void    data_init(t_philo *p);
+#endif
