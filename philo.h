@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/12 11:41:15 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/12 14:13:33 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ typedef struct s_share
     int must_eat;
     int simulation;
     bool    end_simulation;
+    bool all_philos_ready;
     t_philo *philo;
+    bool c;
     t_fork  *forks;
 }t_share;
 
@@ -67,6 +69,7 @@ typedef struct s_philo
     bool full;
     t_fork *left_fork;
     t_fork *right_fork;
+    pthread_t thread_id;
     t_share *share;
 } t_philo;
 
@@ -81,5 +84,5 @@ void    error_exit(char *error);
 int     parsing(t_share *s, char **av);
 // void	safe_mutex(t_mtx *mutex, t_mutex opcode);
 // void handle_mutex_error(int status, t_mutex opcode);
-void    data_init(t_share *s)
+void    data_init(t_share *s);
 #endif

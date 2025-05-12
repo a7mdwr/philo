@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:10:10 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/12 11:26:19 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/12 13:57:56 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void    data_init(t_share *s)
 
     i = 0;
     s->end_simulation = false;
+    s->all_philos_ready = false;
     s->philos = ft_malloc(sizeof(t_philo) * s->philos);
     s ->forks = ft_malloc(sizeof(pthread_mutex_t) * s->philos);
     while (i < s->philos)
