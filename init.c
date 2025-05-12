@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:10:10 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/09 15:01:01 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/12 11:26:19 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void philo_init(t_share *s)
     while(i < s->philos)
     {
         philo = s->philos + i;
-        philo->id =  i+ 1;
+        philo->id =  i + 1;
         philo->full = false;
         philo->meals_count = 0;
         philo->share = s;
@@ -51,7 +51,7 @@ void    data_init(t_share *s)
     s ->forks = ft_malloc(sizeof(pthread_mutex_t) * s->philos);
     while (i < s->philos)
     {
-        safe_mutex(&s->forks[i].fork_id, INIT);
+        pthread_mutex_init(&s->forks[i].fork_id, NULL);
         s->forks[i].fork_id = i;
         i++;
     }

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:28:31 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/08 13:39:32 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/12 11:48:21 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ int    parsing(t_share *s, char **av)
     }
     else
         s->must_eat = -1;
+    data_init(&s);
     return (1);
 }

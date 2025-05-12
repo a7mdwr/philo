@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/09 15:01:27 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/12 11:41:15 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@
 
 typedef pthread_mutex_t t_mtx;
 
-typedef enum e_mutexx
-{
-    LOCK,
-    UNLOCK,
-    INIT,
-    DESTOY,
-    CREAT,
-    JOIN,
-    DETACH,
-}   t_mutex;
+// typedef enum e_mutexx
+// {
+//     LOCK,
+//     UNLOCK,
+//     INIT,
+//     DESTOY,
+//     CREAT,
+//     JOIN,
+//     DETACH,
+// }   t_mutex;
 
 typedef struct s_share
 {
@@ -49,7 +49,7 @@ typedef struct s_share
     int time_to_sleep;
     int must_eat;
     int simulation;
-    bool    end_simulationœ;
+    bool    end_simulation;
     t_philo *philo;
     t_fork  *forks;
 }t_share;
@@ -79,7 +79,7 @@ void    *routine(void *arg);
 void	*ft_malloc(size_t size);
 void    error_exit(char *error);
 int     parsing(t_share *s, char **av);
-void	safe_mutex(t_mtx *mutex, t_mutex opcode);
-void handle_mutex_error(int status, t_mutex opcode);
-
+// void	safe_mutex(t_mtx *mutex, t_mutex opcode);
+// void handle_mutex_error(int status, t_mutex opcode);
+void    data_init(t_share *s)
 #endif
