@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/13 08:48:07 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/13 09:11:14 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int main(int ac, char **av)
 
     i = 0;
     p = NULL;
-    if(!p)
-        return (error_exit("missing arguments"), 0);
+    if (ac != 5 && ac != 6)
+        return(error_exit("Error: wrong number of arguments"), 0);
     p = philo(p, av);
     if(!check(av, ac) || !parsing(p, av))
         return(0);

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:28:31 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/12 15:47:59 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/13 09:11:00 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int check(char **av, int ac)
     int i;
 
     j = 1;
-    if (ac != 5 && ac != 6)
-        return(error_exit("Error: wrong number of arguments"), 0);
     while(ac > j)
     {
         i = 0;
