@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:07:14 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/12 15:58:08 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/12 20:10:42 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void start_simulation(t_philo *p)
     {
         while (p->share->philos > i)
         {
-            pthread_create(&p[i].thread_id, NULL, &routine, &p[i]);
             p[i].id = i;
+            pthread_create(&p[i].thread_id, NULL, &routine, &p[i]);
             i++;
         }
     }
