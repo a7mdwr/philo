@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/13 09:49:37 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/14 19:22:03 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_atoi(const char *str)
 long long   get_time(void)
 {
     struct timeval tv;
-
+	
     gettimeofday(&tv, NULL);
     return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }

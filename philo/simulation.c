@@ -6,19 +6,28 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:07:14 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/12 20:10:42 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/14 20:18:39 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// void *eating_simulation(void *data)
-// {
-//     t_philo *philo;
-    
-//     philo = (t_philo *)data;
-//     wait_all
-// }
+int check_for_die(t_philo *p)
+{
+    int i;
+    int time;
+
+    i = 0;
+    time = 0;
+    while(p->share->philos > i)
+    {
+        time = get_time() - p->starting - p->last_meal;
+        if(time > p->share->time_to_die)
+        {
+            p->died = 1;
+        }
+    }
+}
 
 void start_simulation(t_philo *p)
 {

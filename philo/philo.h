@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/13 11:07:40 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/14 20:19:10 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,12 @@ typedef struct s_philo
 {
     int id;
     int meals_count;
+    long long starting_time;
     bool full;
     int left_fork;
     int right_fork;
+    long long start_eating;
+    int died;
     long long   last_meal;
     t_mtx   meal_mtx;
     pthread_t thread_id;
@@ -63,10 +66,11 @@ int 	ft_isdigit(int c);
 int     check(char **av, int ac);
 void	ft_bzero(void *s, size_t n);
 void    *routine(void *arg);
-void	*ft_malloc(size_t size);
+void	*safe_malloc(size_t size);
 void    error_exit(char *error);
 void    start_simulation(t_philo *p);
 int     parsing(t_philo *p, char **av);
+t_philo *philo(t_philo *p, char **av);
 // void	safe_mutex(t_mtx *mutex, t_mutex opcode);
 // void handle_mutex_error(int status, t_mutex opcode);
 void    data_init(t_philo *p);
