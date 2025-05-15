@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/14 20:19:10 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/14 21:04:36 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <time.h>
+# include <sys/time.h>
 # include <string.h>
 # include <limits.h>
 # include <stdlib.h> 
@@ -35,11 +36,12 @@ typedef struct s_share
     int         philos;
     int         time_to_die;
     int         time_to_eat;
+    long long   start_eating;
     int         time_to_sleep;
     int         must_eat;
     int         sim_stop;
     t_mtx       stop_mtx;
-    long long   start_time;
+    long long   starting_time;
     t_mtx *forks;
 }t_share;
 
@@ -47,11 +49,9 @@ typedef struct s_philo
 {
     int id;
     int meals_count;
-    long long starting_time;
     bool full;
     int left_fork;
     int right_fork;
-    long long start_eating;
     int died;
     long long   last_meal;
     t_mtx   meal_mtx;
@@ -75,4 +75,5 @@ t_philo *philo(t_philo *p, char **av);
 // void handle_mutex_error(int status, t_mutex opcode);
 void    data_init(t_philo *p);
 long long   get_time(void);
+int check_for_die(t_philo *p);
 #endif

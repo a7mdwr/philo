@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 12:07:14 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/14 20:18:39 by aradwan          ###   ########.fr       */
+/*   Created: 2025/05/15 09:43:06 by aradwan           #+#    #+#             */
+/*   Updated: 2025/05/15 10:02:31 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,35 @@
 
 int check_for_die(t_philo *p)
 {
-    int i;
+    int i = 0;
     int time;
 
-    i = 0;
-    time = 0;
-    while(p->share->philos > i)
+    while (i < p->share->philos)
     {
-        time = get_time() - p->starting - p->last_meal;
-        if(time > p->share->time_to_die)
+        time = get_time() - p[i].last_meal;
+        if (time > p[i].share->time_to_die)
         {
-            p->died = 1;
+            printf("Philo %d died after %dms\n", p[i].id, time);
+            p[i].died = 1;
+            return 0;
         }
+        i++;
     }
+    return 1;
 }
+
 
 void start_simulation(t_philo *p)
 {
     int i;
     
     i = 0;
-    if (p->share->must_eat == 0)
-        return ;
-    // else if (s->must_eat == 1)
-    else
+    while (p->share->philos > i)
     {
-        while (p->share->philos > i)
-        {
-            p[i].id = i;
-            pthread_create(&p[i].thread_id, NULL, &routine, &p[i]);
-            i++;
-        }
+        p[i].id = i;
+        int r = pthread_create(&p[i].thread_id, NULL, &routine, &p[i]);\
+        if (r != 0)
+            printf("faild");
+        i++;
     }
 }

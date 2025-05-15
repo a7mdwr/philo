@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:28:31 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/13 09:11:00 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/15 13:23:05 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ int check(char **av, int ac)
 
 int    parsing(t_philo *p, char **av)
 {
-    (void)p;
-    if (!p->share->philos || !p->share->time_to_die || !p->share->time_to_eat|| !p->share->time_to_sleep)
+    int must_eat;
+
+    must_eat = 0;
+    if (!av[1] || !av[2] || !av[3]|| !av[4])
         return (error_exit("Error: Values must be > 0"), 0);
     if (av[5])
     {
-        p->share->must_eat = ft_atoi(av[5]) * 1000;
-        if (p->share->must_eat <= 0)
+        must_eat = ft_atoi(av[5]) * 1000;
+        if (must_eat <= 0)
             return (error_exit("Error: (must_eat) must be > 0"), 0);
     }
     else
