@@ -51,7 +51,6 @@ void    data_init(t_philo *p)
     int i;
 
     i = 0;
-    printf("%d\n\n", p->share->philos);
     p->share->forks = safe_malloc(sizeof(pthread_mutex_t) * p->share->philos);
     while (i < p->share->philos)
     {
@@ -59,6 +58,7 @@ void    data_init(t_philo *p)
         p[i].share = p->share;
         p[i].left_fork = i;
 		p[i].right_fork = (i + 1) % p->share->philos;
+        p[i].last_meal = get_time();
         i++;
     }
 }
@@ -118,21 +118,23 @@ int check(char **av, int ac)
     return (1);
 }
 
-// int    parsing(t_philo *p, char **av)
-// {
-//     (void)p;
-//     if (!p->share->philos || !p->share->time_to_die || !p->share->time_to_eat|| !p->share->time_to_sleep)
-//         return (error_exit("Error: Values must be > 0"), 0);
-//     if (av[5])
-//     {
-//         p->share->must_eat = ft_atoi(av[5]) * 1000;
-//         if (p->share->must_eat <= 0)
-//             return (error_exit("Error: (must_eat) must be > 0"), 0);
-//     }
-//     else
-//         p->share->must_eat = -1;
-//     return (1);
-// }
+int    parsing(t_philo *p, char **av)
+{
+    int must_eat;
+
+    must_eat = 0;
+    if (!av[1] || !av[2] || !av[3]|| !av[4])
+        return (error_exit("Error: Values must be > 0"), 0);
+    if (av[5])
+    {
+        must_eat = ft_atoi(av[5]) * 1000;
+        if (must_eat <= 0)
+            return (error_exit("Error: (must_eat) must be > 0"), 0);
+    }
+    else
+        p->share->must_eat = -1;
+    return (1);
+}
 
 ==> routine.c <==
 #include "philo.h"
@@ -160,6 +162,7 @@ void *routine(void *arg)
         if (s->died == 1)
             break ;
     }
+    
     return NULL;
 }
 ==> simulation.c <==
@@ -167,41 +170,39 @@ void *routine(void *arg)
 
 int check_for_die(t_philo *p)
 {
-    int i;
+    int i = 0;
     int time;
 
-    i = 0;
-    time = 0;
-    while(p->share->philos > i)
+    while (i < p->share->philos)
     {
-        time = get_time() - p->share->starting_time - p->last_meal;
-        if(time > p->share->time_to_die)
+        time = get_time() - p->share->starting_time - p[i].last_meal;
+        if (time > p[i].share->time_to_die)
         {
-            p->died = 1;
+            printf("Philo %d died after %dms\n", p[i].id, time);
+            p[i].died = 1;
             return 0;
         }
+        i++;
     }
     return 1;
 }
+
 
 void start_simulation(t_philo *p)
 {
     int i;
     
     i = 0;
-    if (p->share->must_eat == 0)
-        return ;
-    // else if (s->must_eat == 1)
-    else
+    while (p->share->philos > i)
     {
-        while (p->share->philos > i)
-        {
-            p[i].id = i;
-            pthread_create(&p[i].thread_id, NULL, &routine, &p[i]);
-            i++;
-        }
+        p[i].id = i;
+        int r = pthread_create(&p[i].thread_id, NULL, &routine, &p[i]);\
+        if (r != 0)
+            printf("faild");
+        i++;
     }
 }
+
 ==> utlis.c <==
 #include "philo.h"
 
@@ -288,7 +289,6 @@ typedef struct s_share
     int         time_to_sleep;
     int         must_eat;
     int         sim_stop;
-    t_mtx       stop_mtx;
     long long   starting_time;
     t_mtx *forks;
 }t_share;

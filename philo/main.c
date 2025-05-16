@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/15 09:56:50 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:40:45 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int main(int ac, char **av)
         return(0);
     data_init(p);
     start_simulation(p);
-    printf("🌀 Entering loop to monitor death\n");
     while (1)
     {
         if(!check_for_die(p))

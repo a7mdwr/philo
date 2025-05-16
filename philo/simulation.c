@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:43:06 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/15 10:02:31 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:47:53 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int check_for_die(t_philo *p)
 
     while (i < p->share->philos)
     {
-        time = get_time() - p[i].last_meal;
+        time = get_time() - p->share->starting_time - p[i].last_meal;
         if (time > p[i].share->time_to_die)
         {
-            printf("Philo %d died after %dms\n", p[i].id, time);
-            p[i].died = 1;
+            printf("Philo %d died after %lldms\n", p[i].id, get_time() - p->share->starting_time);
+            p->share->died = 1;
             return 0;
         }
         i++;
@@ -39,10 +39,11 @@ void start_simulation(t_philo *p)
     i = 0;
     while (p->share->philos > i)
     {
-        p[i].id = i;
+        p[i].id = i + 1;
         int r = pthread_create(&p[i].thread_id, NULL, &routine, &p[i]);\
         if (r != 0)
             printf("faild");
+        usleep(200);
         i++;
     }
 }

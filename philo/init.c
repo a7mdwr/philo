@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:10:10 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/15 09:49:55 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:43:39 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,26 @@
 
 t_philo *philo(t_philo *p, char **av)
 {
-    p = safe_malloc(sizeof(t_philo) * ft_atoi(av[1]));
-    p->died = 0;
+    int philos_num;
+
+    philos_num = ft_atoi(av[1]);
+    p = safe_malloc(sizeof(t_philo) * philos_num);
     p->share = safe_malloc(sizeof(t_share));
-    p->share->philos = ft_atoi(av[1]);
-    p->share->time_to_die = ft_atoi(av[2]) * 1000;
-    p->share->time_to_eat = ft_atoi(av[3]) * 1000;
-    p->share->time_to_sleep = ft_atoi(av[4]) * 1000;
-    p->share->starting_time = get_time();
+    int i = 0;
+    p->share->philos = philos_num;
+    while (i < philos_num)
+    {
+        p[i].share = p->share;
+        p[i].share->died = 0;
+        p[i].share->time_to_die = ft_atoi(av[2]) * 1000;
+        p[i].share->time_to_eat = ft_atoi(av[3]) * 1000;
+        p[i].share->time_to_sleep = ft_atoi(av[4]) * 1000;
+        p[i].share->starting_time = get_time();
+        i++;
+    }
     return (p);
 }
+
 
 void    data_init(t_philo *p)
 {

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/14 21:04:36 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:02:58 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ typedef struct s_share
     long long   start_eating;
     int         time_to_sleep;
     int         must_eat;
-    int         sim_stop;
-    t_mtx       stop_mtx;
+    int         died;
     long long   starting_time;
     t_mtx *forks;
 }t_share;
@@ -52,7 +51,6 @@ typedef struct s_philo
     bool full;
     int left_fork;
     int right_fork;
-    int died;
     long long   last_meal;
     t_mtx   meal_mtx;
     pthread_t thread_id;
