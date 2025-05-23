@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:21:12 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/16 18:42:18 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:23:36 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void *routine(void *arg)
         }
         printf("philo number %d has taken a fork\n", s->id);
         printf("philo number %d is eating\n", s->id);
-        usleep(s->share->time_to_eat);
+        usleep(s->share->time_to_eat * 1000);
         if (s->share->died == 1)
         {
             pthread_mutex_unlock(&s->share->forks[s->left_fork]);
@@ -41,7 +41,7 @@ void *routine(void *arg)
         pthread_mutex_unlock(&s->share->forks[s->right_fork]);
         s->last_meal = get_time();
         printf("philo number %d is sleeping\n", s->id);
-        usleep(s->share->time_to_sleep);
+        usleep(s->share->time_to_sleep * 1000);
         if (s->share->died == 1)
             return NULL;
     }
