@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:43:06 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/23 16:32:24 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/24 19:07:36 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int check_for_die(t_philo *p)
         time = get_time() - p[i].last_meal;
         if (time > p[i].share->time_to_die)
         {
-            printf("Philo %d died after %lldms\n", p[i].id, get_time() - p->share->starting_time);
-            p->share->died = 1;
+            if(p->share->must_eat > 0)
+            {
+                printf("Philo %d died after %lldms\n", p[i].id, get_time() - p->share->starting_time);
+                p->share->died = 1;   
+            }
             return 0;
         }
         i++;

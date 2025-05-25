@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/14 19:22:03 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/24 18:49:50 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,13 @@ int	ft_isdigit(int c)
 		return (1);
 	else
 		return (0);
+}
+
+void	sleeper(size_t milliseconds)
+{
+	size_t	start_time;
+
+	start_time = get_time();
+	while (get_time() - start_time < milliseconds)
+		usleep(50);
 }

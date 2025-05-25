@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars.c                                             :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:28:31 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/15 13:23:05 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/25 16:43:26 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int check(char **av, int ac)
     int i;
 
     j = 1;
+    if (av[1][0] == '1')
+        return (printf("philo 1 is died\n"), 0);
     while(ac > j)
     {
         i = 0;
@@ -42,7 +44,7 @@ int    parsing(t_philo *p, char **av)
         return (error_exit("Error: Values must be > 0"), 0);
     if (av[5])
     {
-        must_eat = ft_atoi(av[5]) * 1000;
+        must_eat = ft_atoi(av[5]);
         if (must_eat <= 0)
             return (error_exit("Error: (must_eat) must be > 0"), 0);
     }

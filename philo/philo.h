@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/16 16:02:58 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/25 16:30:33 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_share
     int         must_eat;
     int         died;
     long long   starting_time;
+    t_mtx print;
+    t_mtx   *meal_mtx;
     t_mtx *forks;
 }t_share;
 
@@ -52,7 +54,7 @@ typedef struct s_philo
     int left_fork;
     int right_fork;
     long long   last_meal;
-    t_mtx   meal_mtx;
+    t_mtx   *meal_mtx;
     pthread_t thread_id;
     t_share *share;
 } t_philo;
@@ -67,6 +69,7 @@ void    *routine(void *arg);
 void	*safe_malloc(size_t size);
 void    error_exit(char *error);
 void    start_simulation(t_philo *p);
+void	sleeper(size_t milliseconds);
 int     parsing(t_philo *p, char **av);
 t_philo *philo(t_philo *p, char **av);
 // void	safe_mutex(t_mtx *mutex, t_mutex opcode);

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/16 18:40:45 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/25 16:38:32 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int main(int ac, char **av)
     p = NULL;
     if (ac != 5 && ac != 6)
         return(error_exit("Error: wrong number of arguments"), 0);
-    p = philo(p, av);
     if(!check(av, ac))
         return(0);
+    p = philo(p, av);
     data_init(p);
     start_simulation(p);
     while (1)

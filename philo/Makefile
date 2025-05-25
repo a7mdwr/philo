@@ -1,8 +1,8 @@
 NAME = philo
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 CC = cc
 
-SRCS = main.c pars.c utlis.c routine.c handle_errors.c init.c simulation.c
+SRCS = main.c parsing.c utlis.c routine.c handle_errors.c init.c simulation.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
