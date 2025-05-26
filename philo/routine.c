@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:21:12 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/25 16:35:50 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/26 12:20:00 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 void *routine(void *arg)
 {
     t_philo *s = (t_philo *)arg;
-    int i = s->share->must_eat;
+    int i;
+    i = s->share->must_eat;
     while (i != 0)
     {
         printf("--------------->%d\n", s->share->must_eat);
@@ -34,9 +35,15 @@ void *routine(void *arg)
             pthread_mutex_unlock(&s->share->forks[s->right_fork]);
             return NULL;
         }
-        printf("%lld philo number %d has taken a left fork\n",get_time() - s->share->starting_time, s->id);
-        printf("%lld philo number %d has taken a right fork\n",get_time() - s->share->starting_time, s->id);
+        pthread_mutex_lock(&s->share->print);
+        printf("%lld philo number %d has taken a left fork\n", get_time() - s->share->starting_time, s->id);
+        pthread_mutex_unlock(&s->share->print);
+        pthread_mutex_lock(&s->share->print);
+        printf("%lld philo number %d has taken a right fork\n", get_time() - s->share->starting_time, s->id);
+        pthread_mutex_unlock(&s->share->print);
+        pthread_mutex_lock(&s->share->print);
         printf("%lld philo number %d is eating\n",get_time() - s->share->starting_time , s->id);
+        pthread_mutex_unlock(&s->share->print);
         sleeper(s->share->time_to_eat);
         pthread_mutex_lock(s->share->meal_mtx);
         i--;
@@ -50,7 +57,9 @@ void *routine(void *arg)
         pthread_mutex_unlock(&s->share->forks[s->left_fork]);
         pthread_mutex_unlock(&s->share->forks[s->right_fork]);
         s->last_meal = get_time();
+        pthread_mutex_lock(&s->share->print);
         printf("%lld philo number %d is sleeping\n",get_time() - s->share->starting_time, s->id);
+        pthread_mutex_unlock(&s->share->print);
         sleeper(s->share->time_to_sleep);
         if (s->share->died == 1)
             return NULL;
