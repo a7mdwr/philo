@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/25 16:30:33 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/27 14:45:00 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	*safe_malloc(size_t size);
 void    error_exit(char *error);
 void    start_simulation(t_philo *p);
 void	sleeper(size_t milliseconds);
-int     parsing(t_philo *p, char **av);
+int     parsing(char **av);
 t_philo *philo(t_philo *p, char **av);
 // void	safe_mutex(t_mtx *mutex, t_mutex opcode);
 // void handle_mutex_error(int status, t_mutex opcode);

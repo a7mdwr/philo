@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:10:10 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/25 16:30:16 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/27 14:44:48 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ t_philo *philo(t_philo *p, char **av)
     p->share->starting_time = get_time();
     if(av[5])
         p->share->must_eat = ft_atoi(av[5]);
+    else
+        p->share->must_eat = -1;
+    printf("%d\n", p->share->must_eat);
     while (i < philos_num)
     {
         p[i].share = p->share;

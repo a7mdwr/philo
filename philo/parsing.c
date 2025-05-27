@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:28:31 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/25 16:43:26 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/27 14:45:46 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int check(char **av, int ac)
     return (1);
 }
 
-int    parsing(t_philo *p, char **av)
+int    parsing(char **av)
 {
     int must_eat;
 
@@ -48,7 +48,5 @@ int    parsing(t_philo *p, char **av)
         if (must_eat <= 0)
             return (error_exit("Error: (must_eat) must be > 0"), 0);
     }
-    else
-        p->share->must_eat = -1;
     return (1);
 }
