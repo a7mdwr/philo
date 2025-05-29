@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:09:40 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/29 18:35:03 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/29 19:00:13 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@ void free_all(t_philo *p)
 
     if (!p || !p->share)
         return;
-    
-    // 1. Destroy shared mutexes
     pthread_mutex_destroy(&p->share->print);
-    pthread_mutex_destroy(&p->share->meals);
-
+    pthread_mutex_destroy(&p->share->mtx_died);
+    if (p->share->meal_mtx)
+    {
+        pthread_mutex_destroy(p->share->meal_mtx);
+        free(p->share->meal_mtx);
+        p->share->meal_mtx = NULL;
+    }
     if (p->share->forks)
     {
         i = 0;
@@ -32,10 +35,12 @@ void free_all(t_philo *p)
             i++;
         }
         free(p->share->forks);
+        p->share->forks = NULL;
     }
     free(p->share);
     free(p);
 }
+
 void	*safe_malloc(size_t size)
 {
 	void	*a;

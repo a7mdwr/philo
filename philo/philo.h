@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/29 18:10:07 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/29 18:54:51 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_philo
 
 int 	ft_atoi(const char *str);
 int 	ft_isdigit(int c);
+void     free_all(t_philo *p);
 int     check(char **av, int ac);
 void	ft_bzero(void *s, size_t n);
 void    *routine(void *arg);
@@ -71,8 +72,6 @@ void    start_simulation(t_philo *p);
 void	sleeper(size_t milliseconds);
 int     parsing(char **av);
 t_philo *philo(t_philo *p, char **av);
-// void	safe_mutex(t_mtx *mutex, t_mutex opcode);
-// void handle_mutex_error(int status, t_mutex opcode);
 void    data_init(t_philo *p);
 long long   get_time(void);
 int check_for_die(t_philo *p);

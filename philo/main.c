@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/29 18:34:36 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/29 18:55:16 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int main(int ac, char **av)
         return(error_exit("Error: wrong number of arguments"), 0);
     if(!check(av, ac) || !parsing(av))
         return(0);
-    printf("here");
     p = philo(p, av);
     data_init(p);
     start_simulation(p);
