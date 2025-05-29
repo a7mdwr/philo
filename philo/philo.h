@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/27 14:45:00 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/29 18:10:07 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_share
     t_mtx print;
     t_mtx   *meal_mtx;
     t_mtx *forks;
+    t_mtx mtx_died;
 }t_share;
 
 typedef struct s_philo
@@ -58,8 +59,6 @@ typedef struct s_philo
     pthread_t thread_id;
     t_share *share;
 } t_philo;
-
-
 
 int 	ft_atoi(const char *str);
 int 	ft_isdigit(int c);

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:21:12 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/26 12:20:00 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/29 18:14:10 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ void *routine(void *arg)
         printf("%lld philo number %d is sleeping\n",get_time() - s->share->starting_time, s->id);
         pthread_mutex_unlock(&s->share->print);
         sleeper(s->share->time_to_sleep);
+        pthread_mutex_lock(&s->share->mtx_died);
         if (s->share->died == 1)
             return NULL;
+        pthread_mutex_unlock(&s->share->mtx_died);
     }
     s->share->must_eat = i;
     return NULL;

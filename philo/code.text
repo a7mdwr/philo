@@ -1,4 +1,4 @@
-==> makefile <==
+==> Makefile <==
 clean:
 	rm -f $(OBJS)
 
@@ -12,14 +12,28 @@ re: fclean all
  
 void free_all(t_philo *p)
 {
-	int i;
-	
-	i = 0;
-	if (!p || !p->share)
-        return ;
-	
-}
+    int i;
 
+    if (!p || !p->share)
+        return;
+    
+    // 1. Destroy shared mutexes
+    pthread_mutex_destroy(&p->share->print);
+    pthread_mutex_destroy(&p->share->meals);
+
+    if (p->share->forks)
+    {
+        i = 0;
+        while (i < p->share->philos)
+        {
+            pthread_mutex_destroy(&p->share->forks[i]);
+            i++;
+        }
+        free(p->share->forks);
+    }
+    free(p->share);
+    free(p);
+}
 void	*safe_malloc(size_t size)
 {
 	void	*a;
@@ -58,6 +72,9 @@ t_philo *philo(t_philo *p, char **av)
     p->share->starting_time = get_time();
     if(av[5])
         p->share->must_eat = ft_atoi(av[5]);
+    else
+        p->share->must_eat = -1;
+    printf("%d\n", p->share->must_eat);
     while (i < philos_num)
     {
         p[i].share = p->share;
@@ -76,6 +93,7 @@ void    data_init(t_philo *p)
     p->share->meal_mtx = safe_malloc(sizeof(t_mtx));
     pthread_mutex_init(p->share->meal_mtx, NULL);
     pthread_mutex_init(&p->share->print, NULL);
+    pthread_mutex_init(&p->share->mtx_died, NULL);
     while (i < p->share->philos)
     {
         pthread_mutex_init(&p->share->forks[i], NULL);
@@ -99,8 +117,9 @@ int main(int ac, char **av)
     p = NULL;
     if (ac != 5 && ac != 6)
         return(error_exit("Error: wrong number of arguments"), 0);
-    if(!check(av, ac))
+    if(!check(av, ac) || !parsing(av))
         return(0);
+    printf("here");
     p = philo(p, av);
     data_init(p);
     start_simulation(p);
@@ -116,6 +135,7 @@ int main(int ac, char **av)
             return 0;
         }
     }
+    free_all(p);
     return (0);
 }
 ==> parsing.c <==
@@ -144,7 +164,7 @@ int check(char **av, int ac)
     return (1);
 }
 
-int    parsing(t_philo *p, char **av)
+int    parsing(char **av)
 {
     int must_eat;
 
@@ -157,8 +177,6 @@ int    parsing(t_philo *p, char **av)
         if (must_eat <= 0)
             return (error_exit("Error: (must_eat) must be > 0"), 0);
     }
-    else
-        p->share->must_eat = -1;
     return (1);
 }
 
@@ -214,8 +232,10 @@ void *routine(void *arg)
         printf("%lld philo number %d is sleeping\n",get_time() - s->share->starting_time, s->id);
         pthread_mutex_unlock(&s->share->print);
         sleeper(s->share->time_to_sleep);
+        pthread_mutex_lock(&s->share->mtx_died);
         if (s->share->died == 1)
             return NULL;
+        pthread_mutex_unlock(&s->share->mtx_died);
     }
     s->share->must_eat = i;
     return NULL;
@@ -233,10 +253,10 @@ int check_for_die(t_philo *p)
         time = get_time() - p[i].last_meal;
         if (time > p[i].share->time_to_die)
         {
-            if(p->share->must_eat > 0)
+            if(p->share->must_eat != 0)
             {
                 printf("Philo %d died after %lldms\n", p[i].id, get_time() - p->share->starting_time);
-                p->share->died = 1;   
+                p->share->died = 1;
             }
             return 0;
         }
@@ -360,6 +380,7 @@ typedef struct s_share
     t_mtx print;
     t_mtx   *meal_mtx;
     t_mtx *forks;
+    t_mtx mtx_died;
 }t_share;
 
 typedef struct s_philo
@@ -375,8 +396,6 @@ typedef struct s_philo
     t_share *share;
 } t_philo;
 
-
-
 int 	ft_atoi(const char *str);
 int 	ft_isdigit(int c);
 int     check(char **av, int ac);
@@ -386,7 +405,7 @@ void	*safe_malloc(size_t size);
 void    error_exit(char *error);
 void    start_simulation(t_philo *p);
 void	sleeper(size_t milliseconds);
-int     parsing(t_philo *p, char **av);
+int     parsing(char **av);
 t_philo *philo(t_philo *p, char **av);
 // void	safe_mutex(t_mtx *mutex, t_mutex opcode);
 // void handle_mutex_error(int status, t_mutex opcode);

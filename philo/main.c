@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/27 14:45:08 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/29 18:34:36 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ int main(int ac, char **av)
             return 0;
         }
     }
+    free_all(p);
     return (0);
 }
