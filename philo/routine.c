@@ -23,16 +23,25 @@ void *routine(void *arg)
     {
         pthread_mutex_lock(&s->share->mtx_died);
         if (s->share->died == 1)
-            return NULL;
+            return (pthread_mutex_unlock(&s->share->mtx_died), NULL);
         pthread_mutex_unlock(&s->share->mtx_died);
         pthread_mutex_lock(&s->share->print);
         printf("%lld philo number %d is thinking\n", get_time() - s->share->starting_time, s->id);
         pthread_mutex_unlock(&s->share->print);
-        pthread_mutex_lock(&s->share->forks[s->left_fork]);
-        pthread_mutex_lock(&s->share->forks[s->right_fork]);
+        if(s->id % 2 == 0)
+        {
+            pthread_mutex_lock(&s->share->forks[s->left_fork]);
+            pthread_mutex_lock(&s->share->forks[s->right_fork]);
+        }
+        else
+        {
+            pthread_mutex_lock(&s->share->forks[s->left_fork]);
+            pthread_mutex_lock(&s->share->forks[s->right_fork]);
+        }
         pthread_mutex_lock(&s->share->mtx_died);
         if (s->share->died == 1)
         {
+            pthread_mutex_unlock(&s->share->mtx_died);
             pthread_mutex_unlock(&s->share->forks[s->left_fork]);
             pthread_mutex_unlock(&s->share->forks[s->right_fork]);
             return NULL;
@@ -51,12 +60,15 @@ void *routine(void *arg)
         pthread_mutex_lock(&s->share->meal_mtx);
         i--;
         pthread_mutex_unlock(&s->share->meal_mtx);
+        pthread_mutex_lock(&s->share->mtx_died);
         if (s->share->died == 1)
         {
+            pthread_mutex_unlock(&s->share->mtx_died);
             pthread_mutex_unlock(&s->share->forks[s->left_fork]);
             pthread_mutex_unlock(&s->share->forks[s->right_fork]);
             return NULL;
         }
+        pthread_mutex_unlock(&s->share->mtx_died);
         pthread_mutex_unlock(&s->share->forks[s->left_fork]);
         pthread_mutex_unlock(&s->share->forks[s->right_fork]);
         s->last_meal = get_time();
@@ -66,7 +78,7 @@ void *routine(void *arg)
         sleeper(s->share->time_to_sleep);
         pthread_mutex_lock(&s->share->mtx_died);
         if (s->share->died == 1)
-            return NULL;
+            return (pthread_mutex_unlock(&s->share->mtx_died), NULL);
         pthread_mutex_unlock(&s->share->mtx_died);
     }
     s->share->must_eat = i;
