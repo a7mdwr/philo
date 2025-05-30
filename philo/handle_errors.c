@@ -12,33 +12,25 @@
 
 #include "philo.h"
  
-void free_all(t_philo *p)
+void	free_every_thing(t_philo *p, t_share *s)
 {
-    int i;
+	int		i;
+	int		num;
 
-    if (!p || !p->share)
-        return;
-    pthread_mutex_destroy(&p->share->print);
-    pthread_mutex_destroy(&p->share->mtx_died);
-    if (p->share->meal_mtx)
+	num = s->philos;
+	i = 0;
+	while (i < num)
     {
-        pthread_mutex_destroy(p->share->meal_mtx);
-        free(p->share->meal_mtx);
-        p->share->meal_mtx = NULL;
+		pthread_mutex_destroy(&s->forks[i]);
+        i++;
     }
-    if (p->share->forks)
-    {
-        i = 0;
-        while (i < p->share->philos)
-        {
-            pthread_mutex_destroy(&p->share->forks[i]);
-            i++;
-        }
-        free(p->share->forks);
-        p->share->forks = NULL;
-    }
-    free(p->share);
-    free(p);
+	pthread_mutex_destroy(p->share->mtx_died);
+	pthread_mutex_destroy(p->share->print);
+	free(s->forks);
+	free(s->mtx_died);
+	free(s->print);
+	free(s);
+	free(p);
 }
 
 void	*safe_malloc(size_t size)

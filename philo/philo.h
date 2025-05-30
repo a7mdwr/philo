@@ -41,10 +41,10 @@ typedef struct s_share
     int         must_eat;
     int         died;
     long long   starting_time;
-    t_mtx print;
+    t_mtx   *print;
     t_mtx   *meal_mtx;
-    t_mtx *forks;
-    t_mtx mtx_died;
+    t_mtx   *forks;
+    t_mtx   *mtx_died;
 }t_share;
 
 typedef struct s_philo
