@@ -1,5 +1,5 @@
 NAME = philo
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 CC = cc
 
 SRCS = main.c parsing.c utlis.c routine.c handle_errors.c init.c simulation.c

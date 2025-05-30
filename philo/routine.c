@@ -21,19 +21,23 @@ void *routine(void *arg)
     i = s->share->must_eat;
     while (i != 0)
     {
+        pthread_mutex_lock(&s->share->mtx_died);
         if (s->share->died == 1)
             return NULL;
+        pthread_mutex_unlock(&s->share->mtx_died);
         pthread_mutex_lock(&s->share->print);
         printf("%lld philo number %d is thinking\n", get_time() - s->share->starting_time, s->id);
         pthread_mutex_unlock(&s->share->print);
         pthread_mutex_lock(&s->share->forks[s->left_fork]);
         pthread_mutex_lock(&s->share->forks[s->right_fork]);
+        pthread_mutex_lock(&s->share->mtx_died);
         if (s->share->died == 1)
         {
             pthread_mutex_unlock(&s->share->forks[s->left_fork]);
             pthread_mutex_unlock(&s->share->forks[s->right_fork]);
             return NULL;
         }
+        pthread_mutex_unlock(&s->share->mtx_died);
         pthread_mutex_lock(&s->share->print);
         printf("%lld philo number %d has taken a left fork\n", get_time() - s->share->starting_time, s->id);
         pthread_mutex_unlock(&s->share->print);

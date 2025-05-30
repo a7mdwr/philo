@@ -24,8 +24,12 @@ int check_for_die(t_philo *p)
         {
             if(p->share->must_eat != 0)
             {
+                pthread_mutex_lock(&p->share->print);
                 printf("Philo %d died after %lldms\n", p[i].id, get_time() - p->share->starting_time);
+                pthread_mutex_unlock(&p->share->print);
+                pthread_mutex_lock(&p->share->mtx_died);
                 p->share->died = 1;
+                pthread_mutex_unlock(&p->share->mtx_died);
             }
             return 0;
         }

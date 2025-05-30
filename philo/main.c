@@ -25,7 +25,7 @@ int main(int ac, char **av)
     if(!check(av, ac) || !parsing(av))
         return(0);
     p = philo(p, av);
-    data_init(p);
+     data_init(p);
     start_simulation(p);
     while (1)
     {
@@ -36,6 +36,7 @@ int main(int ac, char **av)
                 pthread_join(p[i].thread_id, NULL);
                 i++;
             }
+            free_all(p);
             return 0;
         }
     }

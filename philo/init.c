@@ -17,7 +17,8 @@ t_philo *philo(t_philo *p, char **av)
     int philos_num;
 
     philos_num = ft_atoi(av[1]);
-    p = safe_malloc(sizeof(t_philo) * philos_num);
+    if(!(p = safe_malloc(sizeof(t_philo) * philos_num)))
+        return NULL;
     p->share = safe_malloc(sizeof(t_share));
     int i = 0;
     p->share->philos = philos_num;
