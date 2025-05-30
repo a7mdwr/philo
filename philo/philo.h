@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/29 18:54:51 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/30 17:46:03 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ typedef struct s_share
     int         must_eat;
     int         died;
     long long   starting_time;
-    t_mtx   *print;
-    t_mtx   *meal_mtx;
+    t_mtx   print;
+    t_mtx   meal_mtx;
     t_mtx   *forks;
-    t_mtx   *mtx_died;
+    t_mtx   mtx_died;
 }t_share;
 
 typedef struct s_philo

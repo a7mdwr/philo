@@ -1,0 +1,409 @@
+==> handle_errors.c <==
+#include "philo.h"
+ 
+void	free_every_thing(t_philo *p, t_share *s)
+{
+	int		i;
+	int		num;
+
+	num = s->philos;
+	i = 0;
+	while (i < num)
+    {
+		pthread_mutex_destroy(&s->forks[i]);
+        i++;
+    }
+	pthread_mutex_destroy(p->share->mtx_died);
+	pthread_mutex_destroy(p->share->print);
+	free(s->forks);
+	free(s->mtx_died);
+	free(s->print);
+	free(s);
+	free(p);
+}
+
+void	*safe_malloc(size_t size)
+{
+	void	*a;
+
+	a = malloc(size);
+	if (a == NULL)
+	{
+		error_exit("Error: malloc failed\n");
+		return(0);
+	}
+	return (a);
+}
+
+void error_exit(char *error)
+{
+	printf("%s\n", error);
+	return ;
+}
+
+==> init.c <==
+# include "philo.h"
+
+t_philo *philo(t_philo *p, char **av)
+{
+    int philos_num;
+
+    philos_num = ft_atoi(av[1]);
+    p = safe_malloc(sizeof(t_philo) * philos_num);
+    p->share = safe_malloc(sizeof(t_share));
+    int i = 0;
+    p->share->philos = philos_num;
+    p->share->died = 0;
+    p->share->time_to_die = ft_atoi(av[2]);
+    p->share->time_to_eat = ft_atoi(av[3]);
+    p->share->time_to_sleep = ft_atoi(av[4]);
+    p->share->starting_time = get_time();
+    if(av[5])
+        p->share->must_eat = ft_atoi(av[5]);
+    else
+        p->share->must_eat = -1;
+    printf("%d\n", p->share->must_eat);
+    while (i < philos_num)
+    {
+        p[i].share = p->share;
+        i++;
+    }
+    return (p);
+}
+
+
+void    data_init(t_philo *p)
+{
+    int i;
+
+    i = 0;
+    p->share->forks = safe_malloc(sizeof(pthread_mutex_t) * p->share->philos);
+    p->share->meal_mtx = safe_malloc(sizeof(t_mtx));
+    pthread_mutex_init(p->share->meal_mtx, NULL);
+    pthread_mutex_init(p->share->print, NULL);
+    pthread_mutex_init(p->share->mtx_died, NULL);
+    while (i < p->share->philos)
+    {
+        pthread_mutex_init(&p->share->forks[i], NULL);
+        p[i].share = p->share;
+        p[i].left_fork = i;
+		p[i].right_fork = (i + 1) % p->share->philos;
+        p[i].last_meal = get_time();
+        i++;
+    }
+}
+==> main.c <==
+
+#include "philo.h"
+
+int main(int ac, char **av)
+{
+    t_philo *p;
+    int i;
+
+    i = 0;
+    p = NULL;
+    if (ac != 5 && ac != 6)
+        return(error_exit("Error: wrong number of arguments"), 0);
+    if(!check(av, ac) || !parsing(av))
+        return(0);
+    p = philo(p, av);
+    data_init(p);
+    start_simulation(p);
+    while (1)
+    {
+        if(!check_for_die(p))
+        {
+            while (i < p->share->philos)
+            {
+                pthread_join(p[i].thread_id, NULL);
+                i++;
+            }
+            return 0;
+        }
+    }
+    free_all(p);
+    return (0);
+}
+==> parsing.c <==
+#include "philo.h"
+
+
+int check(char **av, int ac)
+{
+    int j;
+    int i;
+
+    j = 1;
+    if (av[1][0] == '1')
+        return (printf("philo 1 is died\n"), 0);
+    while(ac > j)
+    {
+        i = 0;
+        while(av[j][i])
+        {
+            if(!ft_isdigit(av[j][i]))
+                return (error_exit("Error : Non-numeric"), 0);
+            i++;
+        }
+        j++;
+    }
+    return (1);
+}
+
+int    parsing(char **av)
+{
+    int must_eat;
+
+    must_eat = 0;
+    if (!av[1] || !av[2] || !av[3]|| !av[4])
+        return (error_exit("Error: Values must be > 0"), 0);
+    if (av[5])
+    {
+        must_eat = ft_atoi(av[5]);
+        if (must_eat <= 0)
+            return (error_exit("Error: (must_eat) must be > 0"), 0);
+    }
+    return (1);
+}
+
+==> routine.c <==
+#include "philo.h"
+
+
+
+void *routine(void *arg)
+{
+    t_philo *s = (t_philo *)arg;
+    int i;
+    i = s->share->must_eat;
+    while (i != 0)
+    {
+        printf("--------------->%d\n", s->share->must_eat);
+        if (s->share->died == 1)
+            return NULL;
+        pthread_mutex_lock(s->share->print);
+        printf("%lld philo number %d is thinking\n", get_time() - s->share->starting_time, s->id);
+        pthread_mutex_unlock(s->share->print);
+        pthread_mutex_lock(&s->share->forks[s->left_fork]);
+        pthread_mutex_lock(&s->share->forks[s->right_fork]);
+        if (s->share->died == 1)
+        {
+            pthread_mutex_unlock(&s->share->forks[s->left_fork]);
+            pthread_mutex_unlock(&s->share->forks[s->right_fork]);
+            return NULL;
+        }
+        pthread_mutex_lock(s->share->print);
+        printf("%lld philo number %d has taken a left fork\n", get_time() - s->share->starting_time, s->id);
+        pthread_mutex_unlock(s->share->print);
+        pthread_mutex_lock(s->share->print);
+        printf("%lld philo number %d has taken a right fork\n", get_time() - s->share->starting_time, s->id);
+        pthread_mutex_unlock(s->share->print);
+        pthread_mutex_lock(s->share->print);
+        printf("%lld philo number %d is eating\n",get_time() - s->share->starting_time , s->id);
+        pthread_mutex_unlock(s->share->print);
+        sleeper(s->share->time_to_eat);
+        pthread_mutex_lock(s->share->meal_mtx);
+        i--;
+        pthread_mutex_unlock(s->share->meal_mtx);
+        if (s->share->died == 1)
+        {
+            pthread_mutex_unlock(&s->share->forks[s->left_fork]);
+            pthread_mutex_unlock(&s->share->forks[s->right_fork]);
+            return NULL;
+        }
+        pthread_mutex_unlock(&s->share->forks[s->left_fork]);
+        pthread_mutex_unlock(&s->share->forks[s->right_fork]);
+        s->last_meal = get_time();
+        pthread_mutex_lock(s->share->print);
+        printf("%lld philo number %d is sleeping\n",get_time() - s->share->starting_time, s->id);
+        pthread_mutex_unlock(s->share->print);
+        sleeper(s->share->time_to_sleep);
+        pthread_mutex_lock(s->share->mtx_died);
+        if (s->share->died == 1)
+            return NULL;
+        pthread_mutex_unlock(s->share->mtx_died);
+    }
+    s->share->must_eat = i;
+    return NULL;
+}
+==> simulation.c <==
+#include "philo.h"
+
+int check_for_die(t_philo *p)
+{
+    int i = 0;
+    long long time;
+
+    while (i < p->share->philos)
+    {
+        time = get_time() - p[i].last_meal;
+        if (time > p[i].share->time_to_die)
+        {
+            if(p->share->must_eat != 0)
+            {
+                printf("Philo %d died after %lldms\n", p[i].id, get_time() - p->share->starting_time);
+                p->share->died = 1;
+            }
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+
+
+void start_simulation(t_philo *p)
+{
+    int i;
+    
+    i = 0;
+    while (p->share->philos > i)
+    {
+        p[i].id = i + 1;
+        int r = pthread_create(&p[i].thread_id, NULL, &routine, &p[i]);
+        if (r != 0)
+            printf("faild");
+        usleep(100);
+        i++;
+    }
+}
+
+==> utlis.c <==
+#include "philo.h"
+
+void	ft_bzero(void *s, size_t n)
+{
+	memset(s, 0, n);
+}
+
+int	ft_atoi(const char *str)
+{
+	size_t	i;
+	long	result;
+	int		sign;
+
+	sign = 1;
+	result = 0;
+	i = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + (str[i] - '0');
+		if (sign == 1 && result > INT_MAX)
+		{
+			error_exit("Error: Values must be < 2147483647");
+			return (exit(1), 0);
+		}
+		i++;
+	}
+	return ((int)(result * sign));
+}
+
+
+long long   get_time(void)
+{
+    struct timeval tv;
+	
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+
+void	sleeper(size_t milliseconds)
+{
+	size_t	start_time;
+
+	start_time = get_time();
+	while (get_time() - start_time < milliseconds)
+		usleep(50);
+}
+==> philo.h <==
+#ifndef PHILO_H
+# define PHILO_H
+
+
+# define TAB '\t'
+# define BACKSPACE '\b'
+# define CARRIAGE '\r'
+# define SPACE ' '
+# include <pthread.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <time.h>
+# include <sys/time.h>
+# include <string.h>
+# include <limits.h>
+# include <stdlib.h> 
+# include <stdbool.h>
+# include <errno.h>
+
+typedef pthread_mutex_t t_mtx;
+
+typedef struct s_share
+{
+    int         philos;
+    int         time_to_die;
+    int         time_to_eat;
+    long long   start_eating;
+    int         time_to_sleep;
+    int         must_eat;
+    int         died;
+    long long   starting_time;
+    t_mtx   *print;
+    t_mtx   *meal_mtx;
+    t_mtx   *forks;
+    t_mtx   *mtx_died;
+}t_share;
+
+typedef struct s_philo
+{
+    int id;
+    int meals_count;
+    bool full;
+    int left_fork;
+    int right_fork;
+    long long   last_meal;
+    t_mtx   *meal_mtx;
+    pthread_t thread_id;
+    t_share *share;
+} t_philo;
+
+int 	ft_atoi(const char *str);
+int 	ft_isdigit(int c);
+void     free_all(t_philo *p);
+int     check(char **av, int ac);
+void	ft_bzero(void *s, size_t n);
+void    *routine(void *arg);
+void	*safe_malloc(size_t size);
+void    error_exit(char *error);
+void    start_simulation(t_philo *p);
+void	sleeper(size_t milliseconds);
+int     parsing(char **av);
+t_philo *philo(t_philo *p, char **av);
+void    data_init(t_philo *p);
+long long   get_time(void);
+int check_for_die(t_philo *p);
+#endif
+==> Makefile <==
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all

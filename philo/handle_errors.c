@@ -6,31 +6,34 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:09:40 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/29 19:00:13 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/30 17:48:21 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
  
-void	free_every_thing(t_philo *p, t_share *s)
+void free_all(t_philo *p)
 {
-	int		i;
-	int		num;
+    int i;
+    t_share *s;
 
-	num = s->philos;
-	i = 0;
-	while (i < num)
+    if (!p || !(s = p->share))
+        return;
+    pthread_mutex_destroy(&s->print);
+    pthread_mutex_destroy(&s->meal_mtx);
+    pthread_mutex_destroy(&s->mtx_died);
+    if (s->forks)
     {
-		pthread_mutex_destroy(&s->forks[i]);
-        i++;
+        i = 0;
+        while (i < s->philos)
+        {
+            pthread_mutex_destroy(&s->forks[i]);
+            i++;
+        }
+        free(s->forks);
     }
-	pthread_mutex_destroy(p->share->mtx_died);
-	pthread_mutex_destroy(p->share->print);
-	free(s->forks);
-	free(s->mtx_died);
-	free(s->print);
-	free(s);
-	free(p);
+    free(s);
+    free(p);
 }
 
 void	*safe_malloc(size_t size)

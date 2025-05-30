@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:10:10 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/29 18:10:15 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/05/30 17:49:02 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ void    data_init(t_philo *p)
 
     i = 0;
     p->share->forks = safe_malloc(sizeof(pthread_mutex_t) * p->share->philos);
-    p->share->meal_mtx = safe_malloc(sizeof(t_mtx));
-    pthread_mutex_init(p->share->meal_mtx, NULL);
-    pthread_mutex_init(p->share->print, NULL);
-    pthread_mutex_init(p->share->mtx_died, NULL);
+    pthread_mutex_init(&p->share->meal_mtx, NULL);
+    pthread_mutex_init(&p->share->print, NULL);
+    pthread_mutex_init(&p->share->mtx_died, NULL);
     while (i < p->share->philos)
     {
         pthread_mutex_init(&p->share->forks[i], NULL);
