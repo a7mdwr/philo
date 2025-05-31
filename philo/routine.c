@@ -30,8 +30,8 @@ void *routine(void *arg)
         pthread_mutex_unlock(&s->share->print);
         if(s->id % 2 == 0)
         {
-            pthread_mutex_lock(&s->share->forks[s->left_fork]);
             pthread_mutex_lock(&s->share->forks[s->right_fork]);
+            pthread_mutex_lock(&s->share->forks[s->left_fork]);
         }
         else
         {
