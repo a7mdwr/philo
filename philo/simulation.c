@@ -19,7 +19,9 @@ int check_for_die(t_philo *p)
 
     while (i < p->share->philos)
     {
+        pthread_mutex_lock(&p->share->meal_mtx);
         time = get_time() - p[i].last_meal;
+        pthread_mutex_unlock(&p->share->meal_mtx);
         if (time > p[i].share->time_to_die)
         {
             if(p->share->must_eat != 0)

@@ -75,4 +75,11 @@ t_philo *philo(t_philo *p, char **av);
 void    data_init(t_philo *p);
 long long   get_time(void);
 int check_for_die(t_philo *p);
+int		check_death(t_philo *s);
+void	print_action(t_philo *s, char *msg);
+void	think(t_philo *s);
+int		take_forks(t_philo *s);
+int		eat(t_philo *s, int *meals);
+void	drop_forks(t_philo *s);
+void	sleep_philo(t_philo *s);
 #endif
