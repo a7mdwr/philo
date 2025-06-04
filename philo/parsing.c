@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:28:31 by aradwan           #+#    #+#             */
-/*   Updated: 2025/06/04 13:55:34 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:23:12 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	check(char **av, int ac)
 	j = 1;
 	if (ft_atoi(av[1]) == 1)
 	{
-		printf("0ms Philo 1 has taken a fork\n");
+		printf("0 1 has taken a fork\n");
 		sleeper(ft_atoi(av[2]));
-		printf("%dms Philo 1 died\n", (ft_atoi(av[2])));
+		printf("%d 1 died\n", (ft_atoi(av[2])));
 		return (0);
 	}
 	while (ac > j)
