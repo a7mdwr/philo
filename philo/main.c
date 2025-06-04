@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/06/03 14:26:05 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/06/04 13:55:16 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ int	main(int ac, char **av)
 				pthread_join(p[i].thread_id, NULL);
 				i++;
 			}
-			free_all(p);
-			return (0);
+			return (free_all(p), 0);
 		}
 	}
-	free_all(p);
-	return (0);
+	return (free_all(p), 0);
 }

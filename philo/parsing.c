@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:28:31 by aradwan           #+#    #+#             */
-/*   Updated: 2025/06/04 12:14:44 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/06/04 13:55:34 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check(char **av, int ac)
 		printf("0ms Philo 1 has taken a fork\n");
 		sleeper(ft_atoi(av[2]));
 		printf("%dms Philo 1 died\n", (ft_atoi(av[2])));
-		return 0;
+		return (0);
 	}
 	while (ac > j)
 	{
@@ -34,8 +34,8 @@ int	check(char **av, int ac)
 				return (error_exit("Error : Non-numeric"), 0);
 			i++;
 		}
-		if(av[j][0] == '\0')
-				return (error_exit("Error: empty argument"), 0);
+		if (av[j][0] == '\0')
+			return (error_exit("Error: empty argument"), 0);
 		j++;
 	}
 	return (1);

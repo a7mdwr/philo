@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:09:40 by aradwan           #+#    #+#             */
-/*   Updated: 2025/06/01 14:42:58 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/06/04 13:54:07 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	free_all(t_philo *p)
 	int		i;
 	t_share	*s;
 
-	if (!p || !(s = p->share))
+	s = p->share;
+	if (!p || !s)
 		return ;
 	pthread_mutex_destroy(&s->print);
 	pthread_mutex_destroy(&s->meal_mtx);

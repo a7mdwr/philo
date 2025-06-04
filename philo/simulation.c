@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:43:06 by aradwan           #+#    #+#             */
-/*   Updated: 2025/06/02 18:45:12 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/06/04 13:52:48 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	check_for_die(t_philo *p)
 	int			i;
 	long long	time;
 
-	i = 0;
-	while (i < p->share->philos)
+	i = -1;
+	while (++i < p->share->philos)
 	{
 		pthread_mutex_lock(&p->share->meal_mtx);
 		time = get_time() - p[i].last_meal;
@@ -28,7 +28,8 @@ int	check_for_die(t_philo *p)
 			if (p->share->must_eat != 0)
 			{
 				pthread_mutex_lock(&p->share->print);
-				printf("%lld %d died \n", get_time() - p->share->starting_time, p[i].id);
+				printf("%lld %d died \n", get_time() - p->share->starting_time,
+					p[i].id);
 				pthread_mutex_unlock(&p->share->print);
 				pthread_mutex_lock(&p->share->mtx_died);
 				p->share->died = 1;
@@ -36,7 +37,6 @@ int	check_for_die(t_philo *p)
 			}
 			return (0);
 		}
-		i++;
 	}
 	return (1);
 }
