@@ -6,57 +6,56 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:10:10 by aradwan           #+#    #+#             */
-/*   Updated: 2025/05/30 17:49:02 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/06/01 14:23:34 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
-t_philo *philo(t_philo *p, char **av)
+t_philo	*philo(t_philo *p, char **av)
 {
-    int philos_num;
+	int	philos_num;
+	int	i;
 
-    philos_num = ft_atoi(av[1]);
-    if(!(p = safe_malloc(sizeof(t_philo) * philos_num)))
-        return NULL;
-    p->share = safe_malloc(sizeof(t_share));
-    int i = 0;
-    p->share->philos = philos_num;
-    p->share->died = 0;
-    p->share->time_to_die = ft_atoi(av[2]);
-    p->share->time_to_eat = ft_atoi(av[3]);
-    p->share->time_to_sleep = ft_atoi(av[4]);
-    p->share->starting_time = get_time();
-    if(av[5])
-        p->share->must_eat = ft_atoi(av[5]);
-    else
-        p->share->must_eat = -1;
-    printf("%d\n", p->share->must_eat);
-    while (i < philos_num)
-    {
-        p[i].share = p->share;
-        i++;
-    }
-    return (p);
+	i = 0;
+	philos_num = ft_atoi(av[1]);
+	p = safe_malloc(sizeof(t_philo) * philos_num);
+	p->share = safe_malloc(sizeof(t_share));
+	p->share->philos = philos_num;
+	p->share->died = 0;
+	p->share->time_to_die = ft_atoi(av[2]);
+	p->share->time_to_eat = ft_atoi(av[3]);
+	p->share->time_to_sleep = ft_atoi(av[4]);
+	p->share->starting_time = get_time();
+	if (av[5])
+		p->share->must_eat = ft_atoi(av[5]);
+	else
+		p->share->must_eat = -1;
+	printf("%d\n", p->share->must_eat);
+	while (i < philos_num)
+	{
+		p[i].share = p->share;
+		i++;
+	}
+	return (p);
 }
 
-
-void    data_init(t_philo *p)
+void	data_init(t_philo *p)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    p->share->forks = safe_malloc(sizeof(pthread_mutex_t) * p->share->philos);
-    pthread_mutex_init(&p->share->meal_mtx, NULL);
-    pthread_mutex_init(&p->share->print, NULL);
-    pthread_mutex_init(&p->share->mtx_died, NULL);
-    while (i < p->share->philos)
-    {
-        pthread_mutex_init(&p->share->forks[i], NULL);
-        p[i].share = p->share;
-        p[i].left_fork = i;
+	i = 0;
+	p->share->forks = safe_malloc(sizeof(pthread_mutex_t) * p->share->philos);
+	pthread_mutex_init(&p->share->meal_mtx, NULL);
+	pthread_mutex_init(&p->share->print, NULL);
+	pthread_mutex_init(&p->share->mtx_died, NULL);
+	while (i < p->share->philos)
+	{
+		pthread_mutex_init(&p->share->forks[i], NULL);
+		p[i].share = p->share;
+		p[i].left_fork = i;
 		p[i].right_fork = (i + 1) % p->share->philos;
-        p[i].last_meal = get_time();
-        i++;
-    }
+		p[i].last_meal = get_time();
+		i++;
+	}
 }
