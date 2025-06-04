@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:43:06 by aradwan           #+#    #+#             */
-/*   Updated: 2025/06/04 13:52:48 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:14:48 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	start_simulation(t_philo *p)
 	{
 		p[i].id = i + 1;
 		if (pthread_create(&p[i].thread_id, NULL, &routine, &p[i]) != 0)
+		{
 			printf("failed");
+			return ;
+		}
 		usleep(100);
 		i++;
 	}

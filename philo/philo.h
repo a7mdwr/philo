@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:22:59 by aradwan           #+#    #+#             */
-/*   Updated: 2025/06/01 14:10:37 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:02:52 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
 void		free_all(t_philo *p);
 int			check(char **av, int ac);
-void		ft_bzero(void *s, size_t n);
 void		*routine(void *arg);
 void		*safe_malloc(size_t size);
 void		error_exit(char *error);

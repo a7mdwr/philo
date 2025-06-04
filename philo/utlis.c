@@ -6,16 +6,11 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 19:21:25 by aradwan           #+#    #+#             */
-/*   Updated: 2025/06/01 14:02:37 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:02:45 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	ft_bzero(void *s, size_t n)
-{
-	memset(s, 0, n);
-}
 
 int	ft_atoi(const char *str)
 {
