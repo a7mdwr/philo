@@ -31,7 +31,6 @@ t_philo	*philo(t_philo *p, char **av)
 		p->share->must_eat = ft_atoi(av[5]);
 	else
 		p->share->must_eat = -1;
-	printf("%d\n", p->share->must_eat);
 	while (i < philos_num)
 	{
 		p[i].share = p->share;

@@ -36,11 +36,9 @@ int	main(int ac, char **av)
 				i++;
 			}
 			free_all(p);
-			printf("----------->%d\n", p->share->must_eat);
 			return (0);
 		}
 	}
 	free_all(p);
-	printf("----------->%d\n", p->share->must_eat);
 	return (0);
 }

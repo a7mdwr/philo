@@ -18,21 +18,24 @@ int	check(char **av, int ac)
 	int	i;
 
 	j = 1;
-	if (!av[1] || av[1][0] == '\0')
-		return (error_exit("Error: invalid philosopher count"), 0);
-	if (av[1][0] == '1')
-		return (printf("Philo 1 died\n"), 0);
+	if (ft_atoi(av[1]) == 1)
+	{
+		printf("0ms Philo 1 has taken a fork\n");
+		sleeper(ft_atoi(av[2]));
+		printf("%dms Philo 1 died\n", (ft_atoi(av[2])));
+		return 0;
+	}
 	while (ac > j)
 	{
 		i = 0;
 		while (av[j][i])
 		{
-			if (!av[j][0] == '\0')
-				return (error_exit("Error: Empty argument"), 0);
 			if (!ft_isdigit(av[j][i]))
 				return (error_exit("Error : Non-numeric"), 0);
 			i++;
 		}
+		if(av[j][0] == '\0')
+				return (error_exit("Error: empty argument"), 0);
 		j++;
 	}
 	return (1);

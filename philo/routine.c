@@ -15,7 +15,7 @@
 void	print_action(t_philo *s, char *msg)
 {
 	pthread_mutex_lock(&s->share->print);
-	printf("%lld philo number %d %s\n",
+	printf("%lld %d %s\n",
 		get_time() - s->share->starting_time, s->id, msg);
 	pthread_mutex_unlock(&s->share->print);
 }

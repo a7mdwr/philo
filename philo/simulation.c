@@ -28,7 +28,7 @@ int	check_for_die(t_philo *p)
 			if (p->share->must_eat != 0)
 			{
 				pthread_mutex_lock(&p->share->print);
-				printf("%lldms %d died \n", get_time() - p->share->starting_time, p[i].id);
+				printf("%lld %d died \n", get_time() - p->share->starting_time, p[i].id);
 				pthread_mutex_unlock(&p->share->print);
 				pthread_mutex_lock(&p->share->mtx_died);
 				p->share->died = 1;
